@@ -1,6 +1,20 @@
 History
 -------
 
+0.8.0 (2018-10-25)
+++++++++++++++++++
+
+- Add release utilities to ``setup.py`` + ``.gitignore`` update
+- Tox/Travis: Expand Python versions tested
+  https://github.com/wronglink/pytest-pudb/pull/27
+- ``PuDBWrapper#pytest_exception_interact``: Remove call to ``self.disable_io_capture()``
+  https://github.com/wronglink/pytest-pudb/pull/26
+- `pytest.hookspec.pytest_enter_pdb` expects a `pdb` (keyword) argument
+  https://github.com/wronglink/pytest-pudb/pull/25
+- Disable unittest tearDowns and cleanups for post mortem debugging
+  - https://github.com/wronglink/pytest-pudb/issues/9
+  - https://github.com/wronglink/pytest-pudb/pull/21
+
 0.7.0 (2018-10-25)
 ++++++++++++++++++
 
