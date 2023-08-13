@@ -115,3 +115,28 @@ def test_pudb_avoid_double_prologue(testdir):
 
     if ret == 0:
         raise RuntimeError(f"pexpect found {re_enter!r} again!")
+
+
+def test_pudb_hookspec_arguments(testdir):
+    p1 = testdir.makepyfile(
+        """
+        def test_1():
+            import pudb
+            pudb.set_trace()
+            assert True
+    """
+    )
+
+    child = testdir.spawn_pytest("--pudb %s" % p1)
+    child.expect("PuDB")
+    child.expect(HELP_MESSAGE)
+    child.expect(VARIABLES_TABLE)
+
+    # Exit pudb
+    child.write("q")
+
+    re_hookspec = re.compile(b"which are declared in the hookspec can.?not be found in this hook call")
+    ret = child.expect([re_hookspec, pexpect.EOF])
+
+    if ret == 0:
+        raise RuntimeError(f"pexpect found {re_hookspec!r}!")
